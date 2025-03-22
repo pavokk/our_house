@@ -1,0 +1,2 @@
+<input id="image" type="file" name="image" accept="image/*" class="hidden">
+<x-ui.secondary-button type="button" class="grow-1" style="width:100px;"><x-svg.image-attach width="30px" height="30px" color="#403B25" /></x-ui.secondary-button>
