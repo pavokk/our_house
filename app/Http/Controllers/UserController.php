@@ -15,10 +15,8 @@ class UserController extends Controller
         return view('user.show', compact('user'));
     }
 
-    public function edit (Request $request) {
-        return view('user.edit', [
-            'user' => $request->user(),
-        ]);
+    public function edit () {
+        return view('user.edit');
     }
 
     public function showRegisterForm() {

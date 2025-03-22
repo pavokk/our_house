@@ -23,7 +23,7 @@
                             @if (isset($authUser->image))
                                 <x-users.profile-picture imageLocation={{ asset('storage/' . $authUser->image) }} altText="{{$users[auth()->id()]['name']}}s profilbilde" />
                             @else
-                                <x-svg.placeholder-profile height="64px" width="64px" />
+                                <x-svg.placeholder-profile height="64px" width="50px" />
                             @endif
 
                         </a>

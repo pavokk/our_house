@@ -13,11 +13,23 @@
         <input id="content" type="hidden" name="content">
         <trix-editor input="content"></trix-editor>
     </div>
-
-    <input id="custom-image-input" type="file" name="image" accept="image/*" class="hidden">
     
-    <div>
-        <x-ui.primary-button type="button">{{ __('Send') }}</x-main-btn>
+    <div class="flex gap-4">
+
+        <div class="new-post-button grow bg-darkbrown text-center ">
+            <button type="submit" class="h-full w-full">Go!</button>
+        </div>
+
+        <div class="attach-image-button w-16">
+            <button type="button">
+                <x-svg.image-attach width="30px" height="30px" color="#F2E088" />
+            </button>
+        </div>
+
+        {{--  
+        <x-ui.primary-button type="submit" class="grow-3">{{ __('Send') }}</x-main-btn>
+        <x-forms.image-upload />
+        --}}
     </div>
 
 </form>
@@ -56,24 +68,5 @@
 @endPush
 
 @push('bodyScripts')
-
-<script>
-    document.addEventListener('trix-initialize', function () {
-        const trixEditor = document.querySelector('trix-editor');
-
-        trixEditor.addEventListener('trix-change', function() {
-            console.log("Editor content:", trixEditor.innerHTML);
-        });
-
-        const customImageInput = document.getElementById("custom-image-input");
-
-        document.querySelector('.trix-button--icon-attach').addEventListener('click', function(event) {
-            event.preventDefault(); // Prevent Trix's default behavior
-            console.log('hijacked');
-            // customImageInput.click(); // Trigger the custom file input
-        });
-    });
-
-</script>
     
 @endpush

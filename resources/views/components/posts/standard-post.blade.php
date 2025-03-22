@@ -4,7 +4,7 @@
             @if (isset($users[$post->user_id]["image"]))
                 <img src="{{ asset('storage/' . $users[$post->user_id]['image']) }}" alt="{{$users[$post->user_id]['name']}}'s profile picture" class="w-full h-full object-cover rounded-full border-2 border-rose-100"">
             @else
-                <x-svg.placeholder-profile height="50px" width="50px" />
+                <x-svg.placeholder-profile height="64px" width="50px" />
             @endif
         </a>
     </div>

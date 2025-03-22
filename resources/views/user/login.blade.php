@@ -41,7 +41,7 @@
             @endif
             
             <div class="login-button w-36 ml-5">
-                <x-ui.primary-button type="button">{{ __('Logg inn') }}</x-main-btn>
+                <x-ui.primary-button type="submit">{{ __('Logg inn') }}</x-main-btn>
             </div>
         </div>
     </form>
