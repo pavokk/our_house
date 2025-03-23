@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 
 class UserController extends Controller
@@ -35,6 +36,7 @@ class UserController extends Controller
 
         $user = new User();
         $user->name = $request->name;
+        $user->slug = Str::slug($user->name);
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
         $user->save();

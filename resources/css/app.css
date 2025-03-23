@@ -11,10 +11,10 @@
 }
 
 @theme {
-    --color-primary-black: #0D0D0D;
-    --color-primary-yellow: #F2E088;
-    --color-darkbrown: #403B25;
-    --color-midbrown: #736B43;
-    --color-lightbrown: #A69A60;
-    --color-ivory: #FFBF00;
+    --color-primary: #F0F0F0;
+    --color-secondary: #E3D6D5;
+    --color-compliment: #BCD4BF;
+    --color-dark-compliment: #8D9E8F;
+    --color-main-dark: #313E2C;
+    --color-main-light: #fff;
 }

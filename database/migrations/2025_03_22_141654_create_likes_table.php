@@ -3,6 +3,9 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+
+use App\Models\Post;
+use App\Models\Comment;
 use App\Models\User;
 
 return new class extends Migration
@@ -12,15 +15,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('posts', function (Blueprint $table) {
+        Schema::create('likes', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('slug');
-            $table->text('content');
-            $table->string('image')->nullable();
-            $table->string('type')->nullable();
-            $table->unsignedInteger('comment_count')->default(0);
-            $table->unsignedInteger('like_count')->default(0);
+            $table->string('type')->default('heart');
+            $table->foreignIdFor(Post::class)->nullable();
+            $table->foreignIdFor(Comment::class)->nullable();
             $table->foreignIdFor(User::class);
             $table->timestamps();
         });
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('posts');
+        Schema::dropIfExists('likes');
     }
 };

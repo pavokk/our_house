@@ -1,9 +1,9 @@
-<x-layouts.main>
+<x-layouts.main title="Skagesundvegen 63">
     <main class="max-w-3xl m-auto mt-5">
 
         @auth
             
-            <div class="new-post bg-lightbrown p-5 rounded-lg mb-10">
+            <div class="new-post bg-compliment p-5 rounded-2xl mb-10">
                 
                 <x-posts.new-post />
 

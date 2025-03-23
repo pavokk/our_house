@@ -21,7 +21,7 @@ trait GenerateUniqueSlugTrait
         $originalSlug = $slug;
         $slugNumber = null;
 
-        if (preg_math('/-(\d+)$/', $slug, $matches)) {
+        if (preg_match('/-(\d+)$/', $slug, $matches)) {
             $slugNumber = $matches[1];
             $slug = Str::replaceLast("-$slugNumber", '', $slug);
         }

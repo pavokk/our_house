@@ -13,7 +13,7 @@
     @stack('styles')
     @stack('headerScripts')
 </head>
-<body class="bg-primary-yellow text-primary-black">
+<body class="bg-primary text-primary-black">
 
     <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
         <div>
@@ -22,7 +22,7 @@
             </a>
         </div>
 
-        <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-lightbrown shadow-md overflow-hidden sm:rounded-lg">
+        <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-compliment shadow-md overflow-hidden sm:rounded-lg">
             {{ $slot }}
         </div>
     </div>

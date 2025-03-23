@@ -1,4 +1,4 @@
-<x-layouts.main title="{{ $user->name }}'s profile">
+<x-layouts.main title="{{ $user->name }} sin profil - Skagesundvegen 63">
 
     <main class="max-w-3xl m-auto mt-5">
 

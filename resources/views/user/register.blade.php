@@ -1,4 +1,4 @@
-<x-layouts.single>
+<x-layouts.single title="Registrer deg - Skagesundvegen 63">
     <main>
 
         <div class="register-box">
@@ -45,7 +45,7 @@
                     </a>
         
                     <div class="login-button w-36 ml-5">
-                        <x-ui.primary-button type="button">{{ __('Registrer deg') }}</x-main-btn>
+                        <x-ui.primary-button type="submit">{{ __('Registrer deg') }}</x-main-btn>
                     </div>
                 </div>
 

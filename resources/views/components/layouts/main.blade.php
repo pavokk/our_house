@@ -13,7 +13,7 @@
     @stack('styles')
     @stack('headerScripts')
 </head>
-<body class="bg-primary-yellow text-primary-black">
+<body class="bg-primary text-main-dark">
     
     <x-partials.main-header />
 

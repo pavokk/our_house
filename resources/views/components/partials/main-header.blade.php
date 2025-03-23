@@ -1,4 +1,4 @@
-<section class="bg-lightbrown h-20">
+<section class="bg-compliment h-20">
 
     <nav class="flex justify-between max-w-3xl w-full h-full m-auto items-center px-5">
 
@@ -19,11 +19,11 @@
                 @auth
 
                     <div class="profile w-16 h-16">
-                        <a href="{{ route('user.show', auth()->id()) }}">
-                            @if (isset($authUser->image))
-                                <x-users.profile-picture imageLocation={{ asset('storage/' . $authUser->image) }} altText="{{$users[auth()->id()]['name']}}s profilbilde" />
+                        <a href="{{ route('user.show', auth()->user()->slug) }}">
+                            @if (isset(auth()->user()->image))
+                                <x-users.profile-picture imageLocation={{ asset('storage/' . auth()->user()->image) }} altText="{{auth()->user()->name}}s profilbilde" />
                             @else
-                                <x-svg.placeholder-profile height="64px" width="50px" />
+                                <x-svg.placeholder-profile color="var(--color-main-dark)" height="64px" width="50px" />
                             @endif
 
                         </a>

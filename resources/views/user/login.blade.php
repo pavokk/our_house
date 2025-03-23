@@ -1,4 +1,4 @@
-<x-layouts.single>
+<x-layouts.single title="Logg inn - Skagesundvegen 63">
     
     <!-- Session Status -->
     {{--<x-auth-session-status class="mb-4" :status="session('status')" />--}}
