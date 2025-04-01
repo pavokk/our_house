@@ -19,8 +19,6 @@ return new class extends Migration
             $table->text('content');
             $table->string('image')->nullable();
             $table->string('type')->nullable();
-            $table->unsignedInteger('comment_count')->default(0);
-            $table->unsignedInteger('like_count')->default(0);
             $table->foreignIdFor(User::class);
             $table->timestamps();
         });
