@@ -1,39 +1,35 @@
-<div class="new-comment bg-compliment p-5 rounded-2xl">
-
-    <form action="{{ route('comment.store') }}" method="post" enctype="multipart/form-data">
+<form action="{{ route('comment.store') }}" method="post" enctype="multipart/form-data">
                 
-        @csrf
-    
-        {{-- 
-        @if (session('success'))
-        <p class="text-green-400">{{ session('success') }}</p>
-        @endif
-        --}}
-    
-        <div class="pb-4">
-            <!--<textarea name="text" placeholder="What's on your mind?" class="resize-none w-full bg-blue-50"></textarea>-->
-            <input id="post_id" type="hidden" name="post_id" value="{{ $post->id }}">
-            <input id="comment" type="hidden" name="comment">
-            <trix-editor input="comment"></trix-editor>
-        </div>
-        
-        <div class="flex gap-4">
-    
-            <div class="new-post-button grow bg-main-dark text-center text-main-light rounded-lg h-11">
-                <button type="submit" class="h-full w-full cursor-pointer">Go!</button>
-            </div>
-    
-            <div class="attach-image-button bg-main-dark text-center text-main-light rounded-lg h-11 w-11">
-                <button type="button" class="cursor-pointer w-full h-full flex items-center justify-center">
-                    <x-svg.image-plus width="30px" height="30px" color="var(--color-main-light)" />
-                </button>
-            </div>
-    
-        </div>
-    
-    </form>
+    @csrf
 
-</div>
+    {{-- 
+    @if (session('success'))
+    <p class="text-green-400">{{ session('success') }}</p>
+    @endif
+    --}}
+
+    <div class="pb-4">
+        <!--<textarea name="text" placeholder="What's on your mind?" class="resize-none w-full bg-blue-50"></textarea>-->
+        <input id="post_id" type="hidden" name="post_id" value="{{ $post->id }}">
+        <input id="comment" type="hidden" name="comment">
+        <trix-editor input="comment"></trix-editor>
+    </div>
+    
+    <div class="flex gap-4">
+
+        <div class="new-post-button grow bg-main-dark text-center text-main-light rounded-lg h-11">
+            <button type="submit" class="h-full w-full cursor-pointer">Go!</button>
+        </div>
+
+        <div class="attach-image-button bg-main-dark text-center text-main-light rounded-lg h-11 w-11">
+            <button type="button" class="cursor-pointer w-full h-full flex items-center justify-center">
+                <x-svg.image-plus width="30px" height="30px" color="var(--color-main-light)" />
+            </button>
+        </div>
+
+    </div>
+    
+</form>
 
 
 

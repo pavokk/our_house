@@ -26,6 +26,11 @@ class Post extends Model
 
     public function isLikedBy($user)
     {
+
+        if (!$user) {
+            return false;
+        }
+
         return $this->likes()->where('user_id', $user->id)->exists();
     }
 }

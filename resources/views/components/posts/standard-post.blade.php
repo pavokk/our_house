@@ -139,6 +139,7 @@ function toggleLike(element, postId) {
         likeCountElement.textContent = likeCount;
     })
     .catch(error => console.error("Error:", error));
+}
 
 </script>
 
