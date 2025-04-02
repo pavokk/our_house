@@ -6,14 +6,9 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\ImageController;
 
 Route::get('/', [PostController::class, 'index'])->name('index');
-
-
-Route::get('/post/{post:slug}', [PostController::class, 'show'])->name('post.show');
-
-Route::get('/profile/{user:slug}', [UserController::class, 'show'])->name('user.show');
-
 
 Route::middleware('guest')->group(function () {
     Route::get('/register', [UserController::class, 'showRegisterForm'])->name('user.registerform');
@@ -24,6 +19,14 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile/edit', [UserController::class, 'edit'])->name('user.edit');
+    Route::post('/profile/update', [UserController::class, 'updateDetails'])->name('user.update');
+    Route::post('/profile/update-password', [UserController::class, 'updatePassword'])->name('user.update-password');
+    Route::post('/profile/update-picture', [UserController::class, 'update-picture'])->name('profile.update-picture');
+    Route::get('profile/confirm-delete', [UserController::class, 'confirmDelete'])->name('user.confirm-delete');
+    Route::delete('/profile/delete', [UserController::class, 'destroy'])->name('user.delete');
+
+    Route::post('/profile/upload-temp', [ImageController::class, 'uploadTemp'])->name('user.upload-temp');
+
     Route::post('/logout', [UserController::class, 'logout'])->name('user.logout');
 
     Route::post('/', [PostController::class, 'store'])->name('post.store');
@@ -35,3 +38,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('likes/{like}', [likeController::class, 'destroy'])->name('like.destroy');
 });
 
+Route::get('/post/{post:slug}', [PostController::class, 'show'])->name('post.show');
+
+Route::get('/profile/{user:slug}', [UserController::class, 'show'])->name('user.show');

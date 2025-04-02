@@ -11,8 +11,6 @@ class LikeController extends Controller
     public function store(StoreLikeRequest $request)
     {
 
-        \Log::info($request->all());
-
         $like = Like::create([
             'user_id' => auth()->id(),
             'post_id' => $request->post_id,

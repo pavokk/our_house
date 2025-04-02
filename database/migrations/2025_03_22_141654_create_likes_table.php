@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('type')->default('heart');
             $table->foreignIdFor(Post::class)->nullable();
             $table->foreignIdFor(Comment::class)->nullable();
-            $table->foreignIdFor(User::class);
+            $table->foreignIdFor(User::class)->constrained()->onDelete('cascade');;
             $table->timestamps();
         });
     }

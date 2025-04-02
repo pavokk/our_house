@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Models\Image;
 
 return new class extends Migration
 {
@@ -17,7 +18,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('slug');
-            $table->string('image')->nullable();
+            $table->foreignIdFor(Image::class)->nullable()->constrained('images')->nullOnDelete();
             $table->text('description')->nullable();
             $table->rememberToken();
             $table->timestamps();

@@ -17,7 +17,39 @@ class UserController extends Controller
     }
 
     public function edit () {
-        return view('user.edit');
+
+        $user = Auth::user();
+        return view('user.edit', compact('user'));
+    }
+
+    public function updateDetails(Request $request) {
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email' . auth()->id(),
+            'description' => 'nullable|string|max:512',
+        ]);
+
+        auth()->user()->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'description' => $request->description,
+        ]);
+
+        return back()->with('success', 'Profile updated successfully.');
+    }
+
+    public function updatePassword (Request $request) {
+        $request->validate([
+            'current_password' => 'required|current_password',
+            'password' => 'required|min:8|confirmed',
+        ]);
+
+        auth()->user()->update([
+            'password' => Hash::make($request->password),
+        ]);
+
+        return back()->with('success', 'Password updated successfully.');
     }
 
     public function showRegisterForm() {
@@ -44,41 +76,6 @@ class UserController extends Controller
         return redirect()->route('index')->with('success', 'Registering fullført.');
     }
 
-    public function update(Request $request) {
-        $user = Auth::user();
-
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-            'image' => 'nullable|image|max:10240',
-            'description' => 'nullable|string|max:5000',
-        ]);
-
-        if ($request->filled('name')) {
-            $user->name = $request->name;
-        }
-
-        if ($request->filled('email')) {
-            $user->email = $request->email;
-        }
-
-        if ($request->filled('password')) {
-            $user->password = Hash::make($request->password);
-        }
-
-        if ($request-hasFile('image')) {
-            $path = $request->file('image')->store('images/profile-pictures', 'public');
-            $user->image = $path;
-        }
-
-        if ($request->filled('description')) {
-            $user->description = $request->description;
-        }
-
-        return redirect()->route('user.show')->with('success', 'Profil endret.');
-    }
-
     public function showLoginForm() {
         $title = 'Logg inn - Skagesundvegen 63';
         return view('user.login', compact('title'));
@@ -103,5 +100,18 @@ class UserController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect()->route('index')->with('success', 'Du er nå logget ut.');
+    }
+
+    public function confirmDelete() {
+        return view('user.confirm-delete');
+    }
+
+    public function destroy(Request $request) {
+        $user = auth()->user();
+        $user->delete();
+
+        auth()->logout();
+
+        return redirect('/')->with('success', 'Account deleted successfully.');
     }
 }

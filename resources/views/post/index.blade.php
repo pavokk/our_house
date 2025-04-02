@@ -3,19 +3,23 @@
 
         @auth
             
-            <div class="new-post bg-compliment p-5 rounded-2xl mb-10">
+            <x-ui.primary-box class="new-post">
                 
                 <x-posts.new-post />
-
-            </div>
+            
+            </x-ui.primary-box>
 
         @endauth
 
         <div class="all-posts flex flex-col gap-5">
 
             @foreach ($posts as $post)
+
+                <x-ui.primary-box class="single-post">
         
-                <x-posts.standard-post :$post :$users />
+                    <x-posts.standard-post :$post :$users />
+
+                </x-ui.primary-box>
         
             @endforeach
 

@@ -1,4 +1,4 @@
-<footer class="mt-10">
+<footer class="my-10">
 
     <div class="footer-box text-center">
         @auth
