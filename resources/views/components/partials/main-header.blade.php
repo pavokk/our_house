@@ -21,7 +21,7 @@
                     <div class="profile w-16 h-16">
                         <a href="{{ route('user.show', auth()->user()->slug) }}">
                             @if (isset(auth()->user()->image))
-                                <x-users.profile-picture imageLocation={{ asset('storage/' . auth()->user()->image) }} altText="{{auth()->user()->name}}s profilbilde" />
+                                <x-users.profile-picture :imageLocation="asset('storage/' . auth()->user()->image->image)" :altText="auth()->user()->image->alt" />
                             @else
                                 <x-svg.placeholder-profile color="var(--color-main-dark)" height="64px" width="50px" />
                             @endif

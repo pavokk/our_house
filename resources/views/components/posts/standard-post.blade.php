@@ -4,9 +4,9 @@
     'users'
     ])
 
-    <x-posts.post-user :$users :$post />
+    <x-posts.post-user :$post />
 
-    <x-posts.post-content :$users :$post :$withLinks />
+    <x-posts.post-content :$post :$withLinks />
 
     <x-posts.post-buttons :$post :$withLinks />
 

@@ -20,7 +20,7 @@
 
         <div class="post-text break-words overflow-hidden">
             <p>{!! $post->content !!}</p>
-            <small>{{ $post->created_at->format('d-m-Y H:i') }} &mdash; <a href="{{ route('user.show', $users[$post->user_id]["slug"]) }}">{{ $users[$post->user_id]["name"] }}</a></small>
+            <small>{{ $post->created_at->format('d-m-Y H:i') }} &mdash; <a href="{{ route('user.show', $post->user->slug) }}">{{ $post->user->name }}</a></small>
         </div>
      
     </div>

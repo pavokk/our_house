@@ -21,7 +21,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile/edit', [UserController::class, 'edit'])->name('user.edit');
     Route::post('/profile/update', [UserController::class, 'updateDetails'])->name('user.update');
     Route::post('/profile/update-password', [UserController::class, 'updatePassword'])->name('user.update-password');
-    Route::post('/profile/update-picture', [UserController::class, 'update-picture'])->name('profile.update-picture');
+    Route::post('/profile/update-picture', [UserController::class, 'changeProfilePicture'])->name('user.update-picture');
     Route::get('profile/confirm-delete', [UserController::class, 'confirmDelete'])->name('user.confirm-delete');
     Route::delete('/profile/delete', [UserController::class, 'destroy'])->name('user.delete');
 

@@ -36,18 +36,12 @@ trait GenerateUniqueSlugTrait
 
         // Increment until unique slug is found
         $i = $slugNumber ? ($slugNumber + 1) : 1;
-        $uniqueSlugFound = false;
-
-        while (!$uniqueSlugFound) {
-            if (!in_array($newSlug, $existingSlugs)) {
-                return $newSlug;
-            }
-
+        do {
+            $newSlug = "{$slug}-{$i}";
             $i++;
-        }
+        } while (in_array($newSlug, $existingSlugs));
 
-        // Fallback: return the original slug with a random number appended
-        return $originalSlug . '_' . mt_rand(1000, 9999);
+        return $newSlug;
     }
 
     private function getExistingSlugs(string $slug, string $table): array

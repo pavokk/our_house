@@ -7,6 +7,7 @@ use App\Traits\GenerateUniqueSlugTrait;
 
 use App\Models\Comment;
 use App\Models\Like;
+use App\Models\User;
 
 class Post extends Model
 {
@@ -32,5 +33,10 @@ class Post extends Model
         }
 
         return $this->likes()->where('user_id', $user->id)->exists();
+    }
+
+    public function user() 
+    {
+        return $this->belongsTo(User::class);
     }
 }

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use App\Services\ImageService;
 
 
 class UserController extends Controller
@@ -37,6 +38,29 @@ class UserController extends Controller
         ]);
 
         return back()->with('success', 'Profile updated successfully.');
+    }
+
+    public function changeProfilePicture(Request $request) {
+
+        $request->validate([
+            'file' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:10000',
+        ]);
+
+        $user = auth()->user();
+
+        $imageService = new ImageService();
+
+        $image = $imageService->upload(
+            $request->file('file'),
+            'profile',
+            $user->name . 's profilbilde',
+        );
+
+        $user->image_id = $image->id;
+        $user->save();
+
+        return back()->with('success', 'Profile picture updated successfully.');
+
     }
 
     public function updatePassword (Request $request) {

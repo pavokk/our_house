@@ -3,10 +3,15 @@
     <main class="max-w-3xl m-auto mt-5">
 
         <div class="my-2">
-            <a href="{{ route('user.show', auth()->user()->slug) }}">Tilbake</a>
+            <a href="{{ route('user.show', auth()->user()->slug) }}" class="flex justify-left items-center gap-1 ml-3"><x-svg.arrow-left width="15px" height="15px" color="var(--color-main-dark)" /> Tilbake</a>
         </div>
 
         <x-ui.primary-box class="change-profile-picture">
+
+
+            <div>
+                <h2 class="text-2xl mb-5">Profilbilde</h2>
+            </div>
 
             <x-forms.change-profile-picture />
 

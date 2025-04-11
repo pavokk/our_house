@@ -7,6 +7,12 @@ use App\Models\User;
 
 class Image extends Model
 {
+
+    protected $fillable = [
+        "image",
+        "type",
+        "alt",
+    ];
     public function user() {
         return $this->hasOne(User::class);
     }
