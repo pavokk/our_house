@@ -2,7 +2,7 @@
 
     @csrf
 
-    <x-forms.main-input id="file" class="mt-1 w-full hidden" type="file" name="file" required accept="image/png, image/jpeg, image/webp, image/gif" />
+    <x-forms.main-input id="image" class="mt-1 w-full hidden" type="file" name="image" accept="image/png, image/jpeg, image/webp, image/gif" />
 
     <div class="w-2xl m-auto">
 

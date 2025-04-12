@@ -20,6 +20,8 @@
         <input id="content" type="hidden" name="content">
         <trix-editor input="content"></trix-editor>
     </div>
+
+    <x-forms.main-input id="file" class="mt-1 w-full hidden" type="file" name="file" required accept="image/png, image/jpeg, image/webp, image/gif" />
     
     <div class="flex gap-4">
 
@@ -27,8 +29,8 @@
             <button type="submit" class="h-full w-full cursor-pointer">Go!</button>
         </div>
 
-        <div class="attach-image-button bg-main-dark text-center text-main-light rounded-lg h-11 w-11">
-            <button type="button" class="cursor-pointer w-full h-full flex items-center justify-center">
+        <div class="bg-main-dark text-center text-main-light rounded-lg h-11 w-11">
+            <button type="button" class="attach-image-button cursor-pointer w-full h-full flex items-center justify-center">
                 <x-svg.image-plus width="30px" height="30px" color="var(--color-main-light)" />
             </button>
         </div>
@@ -81,5 +83,21 @@
 @endPush
 
 @push('bodyScripts')
+
+<script>
+    const imageButton = document.querySelector('.attach-image-button');
+    const fileInput = document.querySelector('#file');
+
+    imageButton.addEventListener("click", function (event) {
+        event.preventDefault();
+        fileInput.click();
+    });
+
+    fileInput.addEventListener('change', function () {
+        if (this.files && this.files[0]) {
+            let file = this.files[0];
+        }
+    });
+</script>
     
 @endpush
