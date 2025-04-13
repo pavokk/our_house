@@ -4,13 +4,13 @@
 
         <x-ui.primary-box class="single-post">
 
-            <x-posts.standard-post :$post :$users :withLinks=false />
+            <x-posts.standard-post :$post :withLinks=false />
 
         </x-ui.primary-box>
 
         <x-ui.primary-box class="post-comments">
 
-            <x-posts.post-comments :$post :$users />
+            <x-posts.post-comments :$post />
             
         </x-ui.primary-box>
         

@@ -1,7 +1,6 @@
 @props([
     'withLinks' => true,
     'post',
-    'users'
     ])
 
     <x-posts.post-user :$post />
