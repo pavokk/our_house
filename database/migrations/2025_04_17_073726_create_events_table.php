@@ -1,12 +1,10 @@
 <?php
 
+use App\Models\Image;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-
-use App\Models\Post;
-use App\Models\Comment;
-use App\Models\User;
 
 return new class extends Migration
 {
@@ -15,11 +13,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('likes', function (Blueprint $table) {
+        Schema::create('events', function (Blueprint $table) {
             $table->id();
-            $table->string('type')->default('heart');
-            $table->foreignIdFor(Post::class)->nullable();
-            $table->foreignIdFor(Comment::class)->nullable();
+            $table->string('name');
+            $table->string('description')->nullable();
+            $table->dateTime('start');
+            $table->dateTime('end');
+            $table->foreignIdFor(Image::class)->nullable();
             $table->foreignIdFor(User::class)->constrained()->onDelete('cascade');
             $table->timestamps();
         });
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('likes');
+        Schema::dropIfExists('events');
     }
 };
