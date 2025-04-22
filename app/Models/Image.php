@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\User;
 
 class Image extends Model
 {
@@ -13,7 +12,4 @@ class Image extends Model
         "type",
         "alt",
     ];
-    public function user() {
-        return $this->hasOne(User::class);
-    }
 }

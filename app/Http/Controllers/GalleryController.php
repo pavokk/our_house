@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Models\Image;
+
 class GalleryController extends Controller
 {
     /**
@@ -11,7 +13,8 @@ class GalleryController extends Controller
      */
     public function index()
     {
-        return view("gallery.index");
+        $images = Image::all();
+        return view("gallery.index", compact("images"));
     }
 
 }
