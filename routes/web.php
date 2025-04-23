@@ -6,9 +6,13 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\ImageController;
 
 Route::get('/', [PostController::class, 'index'])->name('index');
+Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery.index');
+Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar.index');
 
 Route::middleware('guest')->group(function () {
     Route::get('/register', [UserController::class, 'showRegisterForm'])->name('user.registerform');

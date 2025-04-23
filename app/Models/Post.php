@@ -8,6 +8,7 @@ use App\Traits\GenerateUniqueSlugTrait;
 use App\Models\Comment;
 use App\Models\Like;
 use App\Models\User;
+use App\Models\Image;
 
 class Post extends Model
 {
@@ -23,6 +24,10 @@ class Post extends Model
     public function likes()
     {
         return $this->hasMany(Like::class);
+    }
+
+    public function image() {
+        return $this->belongsTo(Image::class);
     }
 
     public function isLikedBy($user)

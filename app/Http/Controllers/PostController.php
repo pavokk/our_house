@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Comment;
+use App\Services\ImageService;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -16,7 +17,7 @@ class PostController extends Controller
     */
     public function index()
     {
-        $posts = Post::orderBy('created_at', 'desc')->get();
+        $posts = Post::orderBy('created_at', 'desc')->with('image')->get();
         $users = User::all()->keyBy('id')->toArray();
 
         return view('post.index', compact('posts', 'users'));
@@ -50,8 +51,15 @@ class PostController extends Controller
         $post->user_id = auth()->id();
 
         if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('images/posts', 'public');
-            $post->image = $path;
+            $imageService = new ImageService();
+
+            $image = $imageService->upload(
+                $request->file('image'),
+                'posts',
+                'Image uploaded by ' . auth()->user()->name,
+            );
+    
+            $post->image_id = $image->id;
         }
 
         $post->save();
