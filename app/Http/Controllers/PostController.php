@@ -17,7 +17,7 @@ class PostController extends Controller
     */
     public function index()
     {
-        $posts = Post::orderBy('created_at', 'desc')->get();
+        $posts = Post::orderBy('created_at', 'desc')->with('image')->get();
         $users = User::all()->keyBy('id')->toArray();
 
         return view('post.index', compact('posts', 'users'));
