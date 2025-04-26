@@ -138,4 +138,9 @@ class UserController extends Controller
 
         return redirect('/')->with('success', 'Account deleted successfully.');
     }
+
+    public function forgotPasswordForm()
+    {
+        return view('user.forgotpasswordform');
+    }
 }

@@ -17,4 +17,9 @@ class GalleryController extends Controller
         return view("gallery.index", compact("images"));
     }
 
+    public function show()
+    {
+        return view("gallery.show");
+    }
+
 }
