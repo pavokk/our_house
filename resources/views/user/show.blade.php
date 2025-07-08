@@ -6,8 +6,13 @@
 
             <div class="pic-and-name flex justify-start items-center gap-4">
                 <div class="profile-pic w-16 h-16">
-                    <x-users.profile-picture :imageLocation="asset('storage/' . $user->image->image)" :altText="$user->image->alt" />
+                    @if (isset($user->image))
+                        <x-users.profile-picture :imageLocation="asset('storage/' . $user->image->image)" :altText="$user->image->alt" />
+                    @else
+                        <x-svg.placeholder-profile height="64px" width="50px" color="var(--color-main-dark)" />
+                    @endif
                 </div>
+
                 <h1 class="text-2xl">{{ $user->name }}s profil</h1>
             </div>
 
@@ -31,9 +36,9 @@
                     Ingenting her...
                 @endif
             </p>
-            
+
         </x-ui.primary-box>
 
     </main>
-    
+
 </x-layouts.main>
