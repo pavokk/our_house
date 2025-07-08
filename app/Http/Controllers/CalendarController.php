@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Event;
+use App\Models\User;
 
 class CalendarController extends Controller
 {
@@ -11,7 +13,9 @@ class CalendarController extends Controller
      */
     public function index()
     {
-        return view("calendar.index");
+        $events = Event::all();
+        $users = User::all();
+        return view("calendar.index", compact('events', 'users'));
     }
 
 }
