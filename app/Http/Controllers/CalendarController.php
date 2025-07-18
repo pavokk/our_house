@@ -18,4 +18,17 @@ class CalendarController extends Controller
         return view("calendar.index", compact('events', 'users'));
     }
 
+    public function show(Event $event)
+    {
+        $users = User::all()->keyBy('id')->toArray();
+        return view('calendar.show', compact('event', 'users'));
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([]);
+
+        $event = new Event();
+    }
+
 }
