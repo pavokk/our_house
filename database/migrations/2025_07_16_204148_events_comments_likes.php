@@ -14,7 +14,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('comments', function (Blueprint $table) {
-            $table->dropForeign('comments_post_id_foreign');
+            // The ->change() method handles dropping the old index automatically.
             $table->foreignIdFor(Post::class)->nullable()->change();
             $table->foreign('post_id')->references('id')->on('posts')->cascadeOnDelete();
             $table->foreignIdFor(Event::class)->nullable()->after('post_id')->constrained()->cascadeOnDelete();
@@ -22,8 +22,7 @@ return new class extends Migration
         });
 
         Schema::table('likes', function (Blueprint $table) {
-            $table->dropForeign('likes_post_id_foreign');
-            $table->dropForeign('likes_comment_id_foreign');
+            // Re-defining the foreign keys is enough to update them.
             $table->foreign('post_id')->references('id')->on('posts')->cascadeOnDelete();
             $table->foreign('comment_id')->references('id')->on('comments')->cascadeOnDelete();
             $table->foreignIdFor(Event::class)->nullable()->after('comment_id')->constrained()->cascadeOnDelete();
@@ -37,8 +36,6 @@ return new class extends Migration
     {
         Schema::table('likes', function (Blueprint $table) {
             $table->dropConstrainedForeignIdFor(Event::class);
-            $table->dropForeign('likes_post_id_foreign');
-            $table->dropForeign('likes_comment_id_foreign');
             $table->foreign('post_id')->references('id')->on('posts');
             $table->foreign('comment_id')->references('id')->on('comments');
         });
@@ -46,7 +43,7 @@ return new class extends Migration
         Schema::table('comments', function (Blueprint $table) {
             $table->dropConstrainedForeignId('parent_id');
             $table->dropConstrainedForeignIdFor(Event::class);
-            $table->dropForeign('comments_post_id_foreign');
+            // The ->change() method handles dropping the old index automatically.
             $table->foreignIdFor(Post::class)->nullable(false)->change();
             $table->foreign('post_id')->references('id')->on('posts');
         });
