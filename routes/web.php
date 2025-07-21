@@ -44,5 +44,6 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/post/{post:slug}', [PostController::class, 'show'])->name('post.show');
+Route::get('/event/{event:slug}', [CalendarController::class, 'show'])->name('event.show');
 
 Route::get('/profile/{user:slug}', [UserController::class, 'show'])->name('user.show');

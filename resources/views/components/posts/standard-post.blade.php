@@ -42,7 +42,7 @@
         font-style: italic;
     }
 </style>
-    
+
 @endPushOnce
 
 @pushOnce('bodyScripts')
