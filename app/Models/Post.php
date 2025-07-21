@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\GenerateUniqueSlugTrait;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 use App\Models\Comment;
 use App\Models\Like;
@@ -12,7 +13,7 @@ use App\Models\Image;
 
 class Post extends Model
 {
-    use GenerateUniqueSlugTrait;
+    use GenerateUniqueSlugTrait, HasFactory;
 
     protected $with = ['comments', 'likes'];
 
@@ -40,7 +41,7 @@ class Post extends Model
         return $this->likes()->where('user_id', $user->id)->exists();
     }
 
-    public function user() 
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
