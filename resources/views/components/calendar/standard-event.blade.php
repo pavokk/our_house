@@ -7,7 +7,7 @@
     <div class="post-profile-pic w-15 h-15">
         <a href="{{ route('user.show', $event->user->slug) }}">
             @if (isset($event->user->image))
-                <x-users.profile-picture :imageLocation="asset('storage/' . $event->user->image->image)" :altText="$event->user->image->alt" />
+                <x-users.profile-picture :imageLocation="$event->user->image->full_image_url" :altText="$event->user->image->alt" />
             @else
                 <x-svg.placeholder-profile height="64px" width="50px" color="var(--color-main-dark)" />
             @endif
@@ -37,7 +37,7 @@
 
         @if ($event->image)
             <div class="post-image">
-                <img src="{{ asset('storage/' . $event->image->image) }}" alt="Post image" style="width: 100%;height:auto;">
+                <img src="{{ $event->image->full_image_url }}" alt="Post image" style="width: 100%;height:auto;">
             </div>
         @endif
 

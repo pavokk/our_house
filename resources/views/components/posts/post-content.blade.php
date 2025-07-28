@@ -14,7 +14,7 @@
 
         @if ($post->image)
             <div class="post-image">
-                <img src="{{ asset('storage/' . $post->image->image) }}" alt="Post image" style="width: 100%;height:auto;">
+                <img src="{{ $post->image->full_image_url }}" alt="Post image" style="width: 100%;height:auto;">
             </div>
         @endif
 
@@ -22,7 +22,7 @@
             <p>{!! $post->content !!}</p>
             <small>{{ $post->created_at->format('d-m-Y H:i') }} &mdash; <a href="{{ route('user.show', $post->user->slug) }}">{{ $post->user->name }}</a></small>
         </div>
-     
+
     </div>
 
 </div>

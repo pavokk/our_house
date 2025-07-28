@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 class EventFactory extends Factory
 {
@@ -10,9 +11,11 @@ class EventFactory extends Factory
     {
         $start = fake()->dateTimeBetween('+1 week', '+3 week');
         $end = fake()->dateTimeBetween($start, $start->format('Y-m-d H:i:s').' +8 hours');
+        $name = fake()->sentence(3);
 
         return [
-            'name' => fake()->sentence(3),
+            'name' => $name,
+            'slug' => Str::slug($name),
             'description' => fake()->paragraph(2),
             'start' => $start,
             'end' => $end,
