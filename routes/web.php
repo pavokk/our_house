@@ -37,6 +37,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/', [PostController::class, 'store'])->name('post.store');
     Route::delete('/post', [PostController::class, 'delete'])->name('post.delete');
 
+    Route::post('/gallery', [CalendarController::class, 'store'])->name('event.store');
+    Route::delete('/gallery', [CalendarController::class, 'delete'])->name('event.delete');
+
     Route::post('/comment', [CommentController::class, 'store'])->name('comment.store');
 
     Route::post('/likes', [LikeController::class, 'store'])->name('like.store');

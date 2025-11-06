@@ -9,6 +9,7 @@ use App\Services\ImageService;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -48,7 +49,7 @@ class PostController extends Controller
         $post->slug = Str::slug($post->title);
         $post->content = $request->content;
         $post->type = $request->type;
-        $post->user_id = auth()->id();
+        $post->user_id = Auth::id();
 
         if ($request->hasFile('image')) {
             $imageService = new ImageService();
@@ -56,9 +57,9 @@ class PostController extends Controller
             $image = $imageService->upload(
                 $request->file('image'),
                 'posts',
-                'Image uploaded by ' . auth()->user()->name,
+                'Image uploaded by ' . Auth::user()->name,
             );
-    
+
             $post->image_id = $image->id;
         }
 

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use App\Services\ImageService;
 
 
@@ -27,11 +28,17 @@ class UserController extends Controller
 
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email' . auth()->id(),
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('users')->ignore(Auth::id()),
+            ],
             'description' => 'nullable|string|max:512',
         ]);
 
-        auth()->user()->update([
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+        $user->update([
             'name' => $request->name,
             'email' => $request->email,
             'description' => $request->description,
@@ -46,7 +53,8 @@ class UserController extends Controller
             'file' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:10000',
         ]);
 
-        $user = auth()->user();
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
 
         $imageService = new ImageService();
 
@@ -69,7 +77,9 @@ class UserController extends Controller
             'password' => 'required|min:8|confirmed',
         ]);
 
-        auth()->user()->update([
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+        $user()->update([
             'password' => Hash::make($request->password),
         ]);
 
@@ -131,10 +141,11 @@ class UserController extends Controller
     }
 
     public function destroy(Request $request) {
-        $user = auth()->user();
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
         $user->delete();
 
-        auth()->logout();
+        Auth::logout();
 
         return redirect('/')->with('success', 'Account deleted successfully.');
     }

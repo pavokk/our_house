@@ -29,6 +29,22 @@ Schema::create('events', function (Blueprint $table) {
 class Event extends Model
 {
     use GenerateUniqueSlugTrait, HasFactory;
+
+    protected $fillable = [
+        'name',
+        'slug',
+        'description',
+        'start',
+        'end',
+        'image_id',
+        'user_id',
+    ];
+
+    protected $casts = [
+        'start' => 'datetime',
+        'end' => 'datetime',
+    ];
+
     protected $with = ['comments', 'likes'];
 
     public function comments()

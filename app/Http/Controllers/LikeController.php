@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Like;
 use App\Http\Requests\StoreLikeRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LikeController extends Controller
 {
@@ -12,7 +13,7 @@ class LikeController extends Controller
     {
 
         $like = Like::create([
-            'user_id' => auth()->id(),
+            'user_id' => Auth::id(),
             'post_id' => $request->post_id,
             'comment_id' => $request->comment_id,
         ]);
@@ -22,7 +23,7 @@ class LikeController extends Controller
 
     public function destroy($postId)
     {
-        $like = Like::where('post_id', $postId)->where('user_id', auth()->id())->first();
+        $like = Like::where('post_id', $postId)->where('user_id', Auth::id())->first();
 
         if ($like) {
             $like->delete();

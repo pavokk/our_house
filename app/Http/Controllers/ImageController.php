@@ -6,6 +6,7 @@ use App\Models\Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Services\ImageService;
+use Illuminate\Support\Facades\Auth;
 
 class ImageController extends Controller
 {
@@ -20,7 +21,7 @@ class ImageController extends Controller
             'file' => 'required|image|mimes:png,jpg,jpeg,gif,webp|max:2048',
         ]);
 
-        $user = auth()->user();
+        $user = Auth::user();
 
         $image = $this->imageService->upload(
             $request->file('file'),

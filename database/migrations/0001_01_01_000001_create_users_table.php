@@ -20,6 +20,9 @@ return new class extends Migration
             $table->string('slug');
             $table->foreignIdFor(Image::class)->nullable()->constrained('images')->nullOnDelete();
             $table->text('description')->nullable();
+
+            $table->string('type')->default('guest');
+
             $table->rememberToken();
             $table->timestamps();
         });

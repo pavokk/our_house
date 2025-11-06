@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Event;
 use App\Models\User;
+use App\Services\ImageService;
 
 class CalendarController extends Controller
 {
@@ -26,9 +29,34 @@ class CalendarController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([]);
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'image' => 'nullable|image|max:2048',
+            'start' => 'required|date',
+            'end' => 'required|date|after:start',
+        ]);
 
-        $event = new Event();
+        $data = $validated;
+
+        $data['slug'] = Str::slug($validated['name']);
+        $data['user_id'] = Auth::id();
+
+        if ($request->hasFile('image')) {
+            $imageService = new ImageService();
+            $image = $imageService->upload(
+                $request->file('image'),
+                'posts',
+                'Image uploaded by ' . Auth::user()->name,
+            );
+            $data['image_id'] = $image->id;
+        }
+
+        unset($data['image']);
+
+        Event::create($data);
+
+        return redirect()->route('calendar.index')->with('success', 'Event created!');
     }
 
 }

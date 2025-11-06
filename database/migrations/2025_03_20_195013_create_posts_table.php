@@ -4,6 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use App\Models\User;
+use App\Models\Image; // Added this import
 
 return new class extends Migration
 {
@@ -17,9 +18,11 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug');
             $table->text('content');
-            $table->string('image')->nullable();
             $table->string('type')->nullable();
             $table->foreignIdFor(User::class)->constrained()->onDelete('cascade');
+
+            $table->foreignIdFor(Image::class)->nullable()->constrained()->onDelete("cascade");
+
             $table->timestamps();
         });
     }
