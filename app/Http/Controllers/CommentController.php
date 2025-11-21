@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Models\Post;
+use App\Models\Event;
 
 class CommentController extends Controller
 {
-
     /**
      * Store a newly created resource in storage.
      */
@@ -17,18 +18,38 @@ class CommentController extends Controller
     {
         $request->validate([
             'comment' => 'required|string|max:512',
-            'post_id' => 'required|exists:posts,id',
+            'commentable_id'   => 'required',
+            'commentable_type' => 'required|string',
+            'parent_id'        => 'nullable|exists:comments,id', // For replies
         ]);
 
-        $post = Post::findOrFail($request->post_id);
+        $allowedTypes = [
+            'post'    => Post::class,
+            'event'   => Event::class,
+            // 'task'    => \App\Models\Task::class, // Add this when ready
+        ];
 
-        $comment = New Comment();
-        $comment->comment = $request->comment;
-        $comment->user_id = Auth::id();
-        $comment->post_id = $post->id;
-        $comment->save();
+        $typeAlias = $request->commentable_type;
+        if (!array_key_exists($typeAlias, $allowedTypes)) {
+            return back()->withErrors(['error' => 'Invalid target.']);
+        }
 
-        return redirect()->route('post.show', ['post' => $post->slug]);
+        // 3. Find the parent model (Post, Event, etc.)
+        $modelClass = $allowedTypes[$typeAlias];
+
+        try {
+            $parent = $modelClass::findOrFail($request->commentable_id);
+        } catch (ModelNotFoundException $e) {
+            return back()->withErrors(['error' => 'The item you are commenting on could not be found.']);
+        }
+
+        $parent->comments()->create([
+            'comment'   => $request->comment,
+            'user_id'   => Auth::id(),
+            'parent_id' => $request->parent_id,
+        ]);
+
+        return back()->with('success', 'Comment posted!');
     }
 
     /**
@@ -36,6 +57,13 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment)
     {
-        //
+        // Use a Gate or Policy for this in the future,
+        // but for now, just check the user ID.
+        if (Auth::id() !== $comment->user_id) {
+            abort(403);
+        }
+
+        $comment->delete();
+        return back()->with('success', 'Comment deleted.');
     }
 }

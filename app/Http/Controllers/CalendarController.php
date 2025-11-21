@@ -30,8 +30,8 @@ class CalendarController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'required|string',
+            'title' => 'required|string|max:255',
+            'content' => 'required|string',
             'image' => 'nullable|image|max:2048',
             'start' => 'required|date',
             'end' => 'required|date|after:start',
@@ -39,7 +39,7 @@ class CalendarController extends Controller
 
         $data = $validated;
 
-        $data['slug'] = Str::slug($validated['name']);
+        $data['slug'] = Str::slug($validated['title']);
         $data['user_id'] = Auth::id();
 
         if ($request->hasFile('image')) {

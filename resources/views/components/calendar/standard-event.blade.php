@@ -28,10 +28,10 @@
         <div class="post-title">
             @if ($withLinks)
                 <a href="{{ route('event.show', $event->slug) }}">
-                    <h2 class="text-xl">{{ $event->name }}</h2>
+                    <h2 class="text-xl">{{ $event->title }}</h2>
                 </a>
             @else
-                <h2 class="text-xl">{{ $event->name }}</h2>
+                <h2 class="text-xl">{{ $event->title }}</h2>
             @endif
         </div>
 

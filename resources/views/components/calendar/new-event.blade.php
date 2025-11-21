@@ -10,8 +10,8 @@
 
     <div class="pb-4">
 
-        <x-forms.input-label for="name">{{ __('Tittel') }}</x-forms.input-label>
-        <x-forms.main-input id="name" type="text" name="name" class="block w-full"></x-forms.main-input>
+        <x-forms.input-label for="title">{{ __('Tittel') }}</x-forms.input-label>
+        <x-forms.main-input id="title" type="text" name="title" class="block w-full"></x-forms.main-input>
 
     </div>
 
@@ -36,8 +36,8 @@
 
     <div class="pb-4">
         <!--<textarea name="text" placeholder="What's on your mind?" class="resize-none w-full bg-blue-50"></textarea>-->
-        <input id="description" type="hidden" name="description">
-        <trix-editor input="description"></trix-editor>
+        <input id="content" type="hidden" name="content">
+        <trix-editor input="content"></trix-editor>
     </div>
 
     <x-forms.main-input id="image" class="mt-1 w-full hidden" type="file" name="image" accept="image/png, image/jpeg, image/webp, image/gif" />

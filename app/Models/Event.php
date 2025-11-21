@@ -10,6 +10,8 @@ use App\Models\Comment;
 use App\Models\Like;
 use App\Models\User;
 use App\Models\Image;
+use App\Models\Traits\Commentable;
+use App\Models\Traits\Likeable;
 
 /*
 
@@ -28,12 +30,12 @@ Schema::create('events', function (Blueprint $table) {
 
 class Event extends Model
 {
-    use GenerateUniqueSlugTrait, HasFactory;
+    use GenerateUniqueSlugTrait, HasFactory, Commentable, Likeable;
 
     protected $fillable = [
-        'name',
+        'title',
         'slug',
-        'description',
+        'content',
         'start',
         'end',
         'image_id',
@@ -47,28 +49,8 @@ class Event extends Model
 
     protected $with = ['comments', 'likes'];
 
-    public function comments()
-    {
-        return $this->hasMany(Comment::class);
-    }
-
-    public function likes()
-    {
-        return $this->hasMany(Like::class);
-    }
-
     public function image() {
         return $this->belongsTo(Image::class);
-    }
-
-    public function isLikedBy($user)
-    {
-
-        if (!$user) {
-            return false;
-        }
-
-        return $this->likes()->where('user_id', $user->id)->exists();
     }
 
     public function user()

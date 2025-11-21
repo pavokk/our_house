@@ -11,4 +11,4 @@
     <rect width="32" height="32" fill="white"/>
     </clipPath>
     </defs>
-    </svg>
+</svg>

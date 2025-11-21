@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('events', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('title');
             $table->string('slug');
-            $table->string('description')->nullable();
+            $table->string('content')->nullable();
             $table->dateTime('start');
             $table->dateTime('end');
             $table->foreignIdFor(Image::class)->nullable();

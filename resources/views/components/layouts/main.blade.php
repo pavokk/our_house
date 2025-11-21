@@ -16,12 +16,14 @@
     @stack('headerScripts')
 </head>
 <body class="bg-primary text-main-dark">
-    
+
     <x-partials.main-header />
 
     {{ $slot }}
 
     <x-partials.main-footer />
+
+    <x-ui.global-modal />
 
     @stack('bodyScripts')
 </body>

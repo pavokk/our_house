@@ -5,40 +5,28 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\GenerateUniqueSlugTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Traits\Commentable;
+use App\Models\Traits\Likeable;
 
-use App\Models\Comment;
-use App\Models\Like;
 use App\Models\User;
 use App\Models\Image;
 
 class Post extends Model
 {
-    use GenerateUniqueSlugTrait, HasFactory;
+    use GenerateUniqueSlugTrait, HasFactory, Commentable, Likeable;
 
     protected $with = ['comments', 'likes'];
 
-    public function comments()
+    protected static function booted(): void
     {
-        return $this->hasMany(Comment::class);
-    }
-
-    public function likes()
-    {
-        return $this->hasMany(Like::class);
+        static::deleting(function (Post $post) {
+            $post->comments()->delete();
+            $post->likes()->delete();
+        });
     }
 
     public function image() {
         return $this->belongsTo(Image::class);
-    }
-
-    public function isLikedBy($user)
-    {
-
-        if (!$user) {
-            return false;
-        }
-
-        return $this->likes()->where('user_id', $user->id)->exists();
     }
 
     public function user()

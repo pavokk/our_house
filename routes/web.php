@@ -9,20 +9,22 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\TaskController;
 
 Route::get('/', [PostController::class, 'index'])->name('index');
 Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery.index');
 Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar.index');
 
 Route::middleware('guest')->group(function () {
-    Route::get('/register', [UserController::class, 'showRegisterForm'])->name('user.registerform');
+    Route::get('/register', [UserController::class, 'showRegisterForm'])->name('register');
     Route::post('/register', [UserController::class, 'register'])->name('user.register');
-    Route::get('/login', [UserController::class, 'showLoginForm'])->name('user.loginform');
+    Route::get('/login', [UserController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [UserController::class, 'login'])->name('user.login');
     Route::get('/forgot-password', [UserController::class, 'forgotPasswordForm'])->name('user.forgotpasswordform');
 });
 
 Route::middleware('auth')->group(function () {
+    Route::get('/wheel', [TaskController::class, 'wheelIndex'])->name('wheel.index');
     Route::get('/profile/edit', [UserController::class, 'edit'])->name('user.edit');
     Route::post('/profile/update', [UserController::class, 'updateDetails'])->name('user.update');
     Route::post('/profile/update-password', [UserController::class, 'updatePassword'])->name('user.update-password');
@@ -43,7 +45,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/comment', [CommentController::class, 'store'])->name('comment.store');
 
     Route::post('/likes', [LikeController::class, 'store'])->name('like.store');
-    Route::delete('likes/{like}', [likeController::class, 'destroy'])->name('like.destroy');
+    Route::delete('likes/{like}', [LikeController::class, 'destroy'])->name('like.destroy');
 });
 
 Route::get('/post/{post:slug}', [PostController::class, 'show'])->name('post.show');

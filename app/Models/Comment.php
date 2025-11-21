@@ -8,10 +8,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\Like;
 use App\Models\User;
 use App\Models\Post;
+use App\Models\Traits\Likeable;
 
 class Comment extends Model
 {
-    use HasFactory;
+    use HasFactory, Likeable;
+
+    public function commentable() {
+        return $this->morphTo();
+    }
 
     public function user()
     {

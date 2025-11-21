@@ -6,6 +6,8 @@
         $activeLogo = 'image';
     } elseif (request()->routeIs('calendar.*')) {
         $activeLogo = 'calendar';
+    } elseif (request()->routeIs('wheel.*')) {
+        $activeLogo = 'wheel';
     } else {
         $activeLogo = 'house'; // default fallback
     }
@@ -23,6 +25,8 @@
                     <x-svg.image-logo width="50px" height="50px" />
                 @elseif ($activeLogo === 'calendar')
                     <x-svg.calendar-logo width="50px" height="50px" />
+                @elseif ($activeLogo === 'wheel')
+                    <x-svg.target width="50px" height="50px" />
                 @endif
             </button>
 
@@ -47,12 +51,21 @@
                             Calendar
                         </a>
                     </li>
+                    @auth
+                    <li>
+                        <a href="{{ route('wheel.index') }}" class="flex items-center gap-2 hover:bg-gray-100 p-2">
+                            <x-svg.target width="30px" height="30px" />
+                            WoC
+                        </a>
+                    </li>
+                    @endauth
+
                 </ul>
             </div>
         </div>
-        
+
         <div class="nav-right">
-    
+
             <div class="authbox">
 
                 @auth
@@ -69,15 +82,15 @@
                     </div>
 
                 @else
-                
+
                     <div class="auth-links flex justify-stretch items-center gap-2 w-64">
 
                         <div class="login-btn flex-grow">
-                            <x-ui.primary-button link="{{ route('user.loginform') }}">Log in</x-ui.primary-button>
+                            <x-ui.primary-button link="{{ route('login') }}">Log in</x-ui.primary-button>
                         </div>
 
                         <div class="register-btn flex-grow">
-                            <x-ui.primary-button link="{{ route('user.registerform') }}">Register</x-ui.primary-button>
+                            <x-ui.primary-button link="{{ route('register') }}">Register</x-ui.primary-button>
                         </div>
 
                     </div>
@@ -85,9 +98,9 @@
                 @endauth
 
             </div>
-    
+
         </div>
-    
+
     </nav>
 
 </section>

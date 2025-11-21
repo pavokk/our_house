@@ -3,7 +3,6 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Models\User;
 
 return new class extends Migration
 {
@@ -12,14 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('likes', function (Blueprint $table) {
-            $table->id();
-            $table->string('type')->default('heart');
-
-            $table->morphs('likeable');
-
-            $table->foreignIdFor(User::class)->constrained()->onDelete('cascade');
-            $table->timestamps();
+        Schema::table('tasks', function (Blueprint $table) {
+            $table->string('status')->default('todo')->after('type');
+            $table->dateTime('due_date')->nullable()->after('status');
         });
     }
 
@@ -28,6 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('likes');
+        Schema::table('tasks', function (Blueprint $table) {
+            //
+        });
     }
 };
