@@ -11,11 +11,50 @@
             </div>
 
             <div class="create-task w-50">
-                <x-ui.primary-button type="button">Nytt gjøremål</x-main-btn>
+                <x-ui.primary-button id="new-task" type="button">Nytt gjøremål</x-ui.primary-btn>
             </div>
 
-        </x-ui>
+        </x-ui.primary-box>
 
+        <div x-data="wheelOfChores({{ count($tasks) }})" class="woc-wrapper p-14">
+
+            <ul
+                class="wheel-of-chores"
+                :style="`transform: rotate(${currentRotation}deg); transition: transform 4s ease-out; --_items: {{ count($tasks) }}`"
+                @transitionend.self="finishSpin"
+            >
+
+                @foreach ($tasks as $index => $task)
+                    <li style="--_idx: {{ $loop->iteration }}">
+                        <p>{{ $task->title }}</p>
+
+                        <template id="task-template-{{ $index }}">
+                            <div class="text-center">
+                                <x-ui.primary-box class="bg-green-50 p-4 border border-green-200">
+                                    <h3 class="text-xl font-bold mb-2">{{ $task->title }}</h3>
+                                    <div class="prose mb-4">
+                                        {!! $task->content ?? 'No description.' !!}
+                                    </div>
+                                    <p class="text-sm text-gray-500">Assigned to: {{ $task->assignee->name ?? 'Unassigned' }}</p>
+                                </x-ui.primary-box>
+                            </div>
+                        </template>
+                    </li>
+                @endforeach
+
+            </ul>
+
+            <button
+                type="button"
+                @click="spin"
+                :disabled="isSpinning"
+                class="z-10"
+            >
+                SPIN
+            </button>
+
+        </div>
+        {{--
         <div class="woc-wrapper p-14">
 
             <ul class="wheel-of-chores">
@@ -39,11 +78,7 @@
 
 
         </div>
-
-        <div class="woc-result" role="status" aria-live="polite"></div>
-
-        <x-wheel.task-modal />
-
+        --}}
     </main>
 
 @push('styles')
@@ -129,114 +164,51 @@
 
 @push('bodyScripts')
 <script>
-function wheelOfFortune(selector) {
-    const node = document.querySelector(selector);
-    if (!node) return;
 
-    const wheel = node.querySelector('ul');
-    const spin = node.querySelector('button');
-    const result = document.querySelector('.woc-result');
+document.addEventListener('alpine:init', () => {
+    Alpine.data('wheelOfChores', (totalItems) => ({
+        currentRotation: 0,
+        isSpinning: false,
+        sliceAngle: 360 / totalItems,
+        winnerIndex: 0,
 
-    const items = wheel.querySelectorAll('li');
-    const itemCount = items.length;
-    if (itemCount === 0) return;
+        spin () {
+            if (this.isSpinning || totalItems === 0) return;
 
-    // Calculate the angle for each slice
-    const sliceAngle = 360 / itemCount;
-    const sliceCenterOffset = sliceAngle / 2;
+            this.isSpinning = true;
 
-    let animation;
-    let previousEndDegree = 0;
+            const winningIndex = Math.floor(Math.random() * totalItems);
 
-    spin.addEventListener('click', () => {
+            const sliceCenterOffset = this.sliceAngle / 2;
+            const targetSliceCenter = (winningIndex * this.sliceAngle) + sliceCenterOffset;
 
-        // Disable UI
-        spin.disabled = true;
-        result.textContent = '';
-        if (animation) {
-            animation.cancel();
+            const targetRotation = 105 - targetSliceCenter;
+
+            const minSpin = 1800;
+            const currentMod = this.currentRotation % 360;
+            const distance = minSpin + (targetRotation - currentMod);
+
+            this.currentRotation += distance;
+            this.winnerIndex = winningIndex;
+        },
+
+        finishSpin () {
+            this.isSpinning = false;
+            const template = document.getElementById(`task-template-${this.winnerIndex}`);
+
+            if (template) {
+                const contentHtml = template.innerHTML;
+                AppModal.open({
+                    title: "We have a winner!",
+                    content: contentHtml,
+                    actions: [
+                        { label: 'Yay!', onClick: () => AppModal.close() }
+                    ]
+                });
+            }
         }
-
-        // Pick random winner before we spin
-        const winningIndex = Math.floor(Math.random() * itemCount);
-        const winner = items[winningIndex].textContent;
-
-        // Calculate target angle
-        const targetSliceCenter = (winningIndex * sliceAngle) + sliceCenterOffset;
-        const targetRotation = 105 - targetSliceCenter; // Adjusting so the target ends up on top
-        const minSpinDegrees = 1800; // Spin minimum 5 times:
-        const cycles = Math.ceil((previousEndDegree + minSpinDegrees) / 360); // How many times round
-        const newEndDegree = (cycles * 360) + targetRotation;
-
-        // Run animation
-        animation = wheel.animate([
-            { transform: `rotate(${previousEndDegree}deg)` },
-            { transform: `rotate(${newEndDegree}deg)` }
-        ], {
-            duration: 4000,
-            direction: 'normal',
-            easing: 'ease-out', // Starts fast, slows to a stop
-            fill: 'forwards',
-            iterations: 1
-        });
-
-        // Reveal winner when wheel has stopped spinning
-        animation.onfinish = () => {
-            previousEndDegree = newEndDegree;
-            spin.disabled = false;
-            result.textContent = `Winner: ${winner}!`;
-        };
-    });
-}
-
-wheelOfFortune('.woc-wrapper');
-
-function setupTaskModal(modalSelector) {
-    const modal = document.getElementById(modalSelector);
-    if (!modal) return;
-
-    const items = document.querySelectorAll('.wheel-of-chores li');
-    const closeBtn = modal.querySelector('.task-modal-close');
-
-    const titleEl = modal.querySelector('#modal-title');
-    const bodyEl = modal.querySelector('#modal-body');
-    const creatorEl = modal.querySelector('#modal-creator');
-    const assigneeEl = modal.querySelector('#modal-assignee');
-
-    items.forEach(item => {
-        item.addEventListener('click', () => {
-            const data = item.dataset;
-
-            console.log(data);
-
-            titleEl.textContent = data.title;
-            bodyEl.innerHTML = data.content;
-            creatorEl.textContent = data.creator;
-            assigneeEl.textContent = data.assignee;
-
-            // --- CHANGED LINE ---
-            modal.classList.remove('hidden'); // Show the modal
-        });
-    });
-
-    const closeModal = () => {
-        // --- CHANGED LINE ---
-        modal.classList.add('hidden'); // Hide the modal
-    };
-
-    closeBtn.addEventListener('click', closeModal);
-
-    // This listens for clicks on the dark backdrop
-    modal.addEventListener('click', (event) => {
-        // If the click is on the backdrop (the modal itself)
-        // and NOT on the content box, close it.
-        if (event.target === modal) {
-            closeModal();
-        }
-    });
-}
-
-setupTaskModal('task-modal');
+    }));
+});
 
 </script>
 @endpush
