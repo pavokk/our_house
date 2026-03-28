@@ -25,6 +25,12 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/wheel', [TaskController::class, 'wheelIndex'])->name('wheel.index');
+    Route::get('/wheel/my-tasks', [TaskController::class, 'myTasks'])->name('wheel.my-tasks');
+    Route::post('/wheel', [TaskController::class, 'store'])->name('task.store');
+    Route::patch('/wheel/{task}', [TaskController::class, 'update'])->name('task.update');
+    Route::patch('/wheel/{task}/status', [TaskController::class, 'updateStatus'])->name('task.status');
+    Route::delete('/wheel/{task}', [TaskController::class, 'destroy'])->name('task.destroy');
+    Route::post('/wheel/{task}/assign', [TaskController::class, 'assignTask'])->name('task.assign');
     Route::get('/profile/edit', [UserController::class, 'edit'])->name('user.edit');
     Route::post('/profile/update', [UserController::class, 'updateDetails'])->name('user.update');
     Route::post('/profile/update-password', [UserController::class, 'updatePassword'])->name('user.update-password');

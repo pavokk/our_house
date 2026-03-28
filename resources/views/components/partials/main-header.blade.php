@@ -36,26 +36,26 @@
                     <li>
                         <a href="{{ route('index') }}" class="flex items-center gap-2 hover:bg-gray-100 p-2">
                             <x-svg.house-logo width="30px" height="30px" />
-                            Posts
+                            Innlegg
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('gallery.index') }}" class="flex items-center gap-2 hover:bg-gray-100 p-2">
                             <x-svg.image-logo width="30px" height="30px" />
-                            Gallery
+                            Galleri
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('calendar.index') }}" class="flex items-center gap-2 hover:bg-gray-100 p-2">
                             <x-svg.calendar-logo width="30px" height="30px" />
-                            Calendar
+                            Kalender
                         </a>
                     </li>
                     @auth
                     <li>
                         <a href="{{ route('wheel.index') }}" class="flex items-center gap-2 hover:bg-gray-100 p-2">
                             <x-svg.target width="30px" height="30px" />
-                            WoC
+                            Hjulet
                         </a>
                     </li>
                     @endauth
@@ -86,11 +86,11 @@
                     <div class="auth-links flex justify-stretch items-center gap-2 w-64">
 
                         <div class="login-btn flex-grow">
-                            <x-ui.primary-button link="{{ route('login') }}">Log in</x-ui.primary-button>
+                            <x-ui.primary-button link="{{ route('login') }}">Logg inn</x-ui.primary-button>
                         </div>
 
                         <div class="register-btn flex-grow">
-                            <x-ui.primary-button link="{{ route('register') }}">Register</x-ui.primary-button>
+                            <x-ui.primary-button link="{{ route('register') }}">Registrer deg</x-ui.primary-button>
                         </div>
 
                     </div>

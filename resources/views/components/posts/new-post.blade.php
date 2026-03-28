@@ -26,7 +26,7 @@
     <div class="flex gap-4">
 
         <div class="new-post-button grow bg-main-dark text-center text-main-light rounded-lg h-11">
-            <button type="submit" class="h-full w-full cursor-pointer">Go!</button>
+            <button type="submit" class="h-full w-full cursor-pointer">Send!</button>
         </div>
 
         <div class="bg-main-dark text-center text-main-light rounded-lg h-11 w-11">
