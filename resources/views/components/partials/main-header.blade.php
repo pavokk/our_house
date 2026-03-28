@@ -8,6 +8,8 @@
         $activeLogo = 'calendar';
     } elseif (request()->routeIs('wheel.*')) {
         $activeLogo = 'wheel';
+    } elseif (request()->routeIs('games.*')) {
+        $activeLogo = 'games';
     } else {
         $activeLogo = 'house'; // default fallback
     }
@@ -27,6 +29,8 @@
                     <x-svg.calendar-logo width="50px" height="50px" />
                 @elseif ($activeLogo === 'wheel')
                     <x-svg.target width="50px" height="50px" />
+                @elseif ($activeLogo === 'games')
+                    <x-svg.gaming width="50px" height="50px" />
                 @endif
             </button>
 
@@ -59,6 +63,12 @@
                         </a>
                     </li>
                     @endauth
+                    <li>
+                        <a href="{{ route('games.index') }}" class="flex items-center gap-2 hover:bg-gray-100 p-2">
+                            <x-svg.gaming width="30px" height="30px" />
+                            Spill
+                        </a>
+                    </li>
 
                 </ul>
             </div>

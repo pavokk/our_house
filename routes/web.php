@@ -10,10 +10,17 @@ use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\GamesController;
+use App\Http\Controllers\SnakeController;
+use App\Http\Controllers\TetrisController;
+use App\Http\Controllers\HighscoreController;
 
 Route::get('/', [PostController::class, 'index'])->name('index');
 Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery.index');
 Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar.index');
+Route::get('/games', [GamesController::class, 'index'])->name('games.index');
+Route::get('/games/snake', [SnakeController::class, 'index'])->name('games.snake');
+Route::get('/games/tetris', [TetrisController::class, 'index'])->name('games.tetris');
 
 Route::middleware('guest')->group(function () {
     Route::get('/register', [UserController::class, 'showRegisterForm'])->name('register');
@@ -41,6 +48,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/profile/upload-temp', [ImageController::class, 'uploadTemp'])->name('user.upload-temp');
 
     Route::post('/logout', [UserController::class, 'logout'])->name('user.logout');
+    Route::post('/games/highscore', [HighscoreController::class, 'store'])->name('highscore.store');
 
     Route::post('/', [PostController::class, 'store'])->name('post.store');
     Route::delete('/post', [PostController::class, 'delete'])->name('post.delete');
